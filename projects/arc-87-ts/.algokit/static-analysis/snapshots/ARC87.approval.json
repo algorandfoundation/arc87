@@ -1,0 +1,2988 @@
+{
+  "success": false,
+  "error": null,
+  "result": [
+    {
+      "type": "ExecutionPaths",
+      "count": 2,
+      "description": "\nCheck: \"unprotected-deletable\", Impact: High, Confidence: High\nDescription: Unprotected Deletable Applications\n\nWiki: https://github.com/crytic/tealer/wiki/Detector-Documentation#unprotected-deletable-application\n",
+      "check": "unprotected-deletable",
+      "impact": "High",
+      "confidence": "High",
+      "help": "- Avoid deletable applications.\n- Add access controls to the vulnerable method.",
+      "paths": [
+        {
+          "short": "0 -> 1 -> 2 -> 28 -> 32 -> 29",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "364: length:",
+              "367: txna ApplicationArgs 1",
+              "368: dup",
+              "369: intc_1",
+              "370: extract_uint16",
+              "371: intc_2",
+              "372: +",
+              "373: dig 1",
+              "374: len",
+              "375: ==",
+              "376: assert",
+              "377: extract 2 0",
+              "380: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "383: bytec_0",
+              "384: swap",
+              "385: concat",
+              "388: box_len",
+              "389: assert",
+              "392: itob",
+              "393: bytec_1",
+              "394: swap",
+              "395: concat",
+              "396: log",
+              "397: intc_0",
+              "398: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 30 -> 32 -> 31",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "402: extract:",
+              "405: txna ApplicationArgs 1",
+              "406: dup",
+              "407: intc_1",
+              "408: extract_uint16",
+              "409: intc_2",
+              "410: +",
+              "411: dig 1",
+              "412: len",
+              "413: ==",
+              "414: assert",
+              "415: extract 2 0",
+              "416: txna ApplicationArgs 2",
+              "417: dup",
+              "418: len",
+              "419: intc_3",
+              "420: ==",
+              "421: assert",
+              "422: btoi",
+              "423: txna ApplicationArgs 3",
+              "424: dup",
+              "425: len",
+              "426: intc_3",
+              "427: ==",
+              "428: assert",
+              "429: btoi",
+              "432: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "435: dup",
+              "436: pushint 1018",
+              "437: <=",
+              "438: assert",
+              "441: bytec_0",
+              "442: uncover 3",
+              "443: concat",
+              "446: dup",
+              "447: box_len",
+              "448: assert",
+              "451: dig 3",
+              "452: dig 3",
+              "453: +",
+              "454: >=",
+              "455: assert",
+              "458: cover 2",
+              "459: box_extract",
+              "462: dup",
+              "463: len",
+              "464: itob",
+              "465: extract 6 2",
+              "466: swap",
+              "467: concat",
+              "468: bytec_1",
+              "469: swap",
+              "470: concat",
+              "471: log",
+              "472: intc_0",
+              "473: return"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ExecutionPaths",
+      "count": 2,
+      "description": "\nCheck: \"unprotected-updatable\", Impact: High, Confidence: High\nDescription: Unprotected Upgradable Applications\n\nWiki: https://github.com/crytic/tealer/wiki/Detector-Documentation#unprotected-updatable-application\n",
+      "check": "unprotected-updatable",
+      "impact": "High",
+      "confidence": "High",
+      "help": "- Avoid upgradable applications.\n- Add access controls to the vulnerable method.",
+      "paths": [
+        {
+          "short": "0 -> 1 -> 2 -> 28 -> 32 -> 29",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "364: length:",
+              "367: txna ApplicationArgs 1",
+              "368: dup",
+              "369: intc_1",
+              "370: extract_uint16",
+              "371: intc_2",
+              "372: +",
+              "373: dig 1",
+              "374: len",
+              "375: ==",
+              "376: assert",
+              "377: extract 2 0",
+              "380: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "383: bytec_0",
+              "384: swap",
+              "385: concat",
+              "388: box_len",
+              "389: assert",
+              "392: itob",
+              "393: bytec_1",
+              "394: swap",
+              "395: concat",
+              "396: log",
+              "397: intc_0",
+              "398: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 30 -> 32 -> 31",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "402: extract:",
+              "405: txna ApplicationArgs 1",
+              "406: dup",
+              "407: intc_1",
+              "408: extract_uint16",
+              "409: intc_2",
+              "410: +",
+              "411: dig 1",
+              "412: len",
+              "413: ==",
+              "414: assert",
+              "415: extract 2 0",
+              "416: txna ApplicationArgs 2",
+              "417: dup",
+              "418: len",
+              "419: intc_3",
+              "420: ==",
+              "421: assert",
+              "422: btoi",
+              "423: txna ApplicationArgs 3",
+              "424: dup",
+              "425: len",
+              "426: intc_3",
+              "427: ==",
+              "428: assert",
+              "429: btoi",
+              "432: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "435: dup",
+              "436: pushint 1018",
+              "437: <=",
+              "438: assert",
+              "441: bytec_0",
+              "442: uncover 3",
+              "443: concat",
+              "446: dup",
+              "447: box_len",
+              "448: assert",
+              "451: dig 3",
+              "452: dig 3",
+              "453: +",
+              "454: >=",
+              "455: assert",
+              "458: cover 2",
+              "459: box_extract",
+              "462: dup",
+              "463: len",
+              "464: itob",
+              "465: extract 6 2",
+              "466: swap",
+              "467: concat",
+              "468: bytec_1",
+              "469: swap",
+              "470: concat",
+              "471: log",
+              "472: intc_0",
+              "473: return"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ExecutionPaths",
+      "count": 0,
+      "description": "\nCheck: \"can-close-account\", Impact: High, Confidence: High\nDescription: Missing CloseRemainderTo field Validation\n\nWiki: https://github.com/crytic/tealer/wiki/Detector-Documentation#missing-closeremainderto-field-validation\n",
+      "check": "can-close-account",
+      "impact": "High",
+      "confidence": "High",
+      "help": "Validate `CloseRemainderTo` field in the LogicSig.",
+      "paths": []
+    },
+    {
+      "type": "ExecutionPaths",
+      "count": 0,
+      "description": "\nCheck: \"can-close-asset\", Impact: High, Confidence: High\nDescription: Missing AssetCloseTo Field Validation\n\nWiki: https://github.com/crytic/tealer/wiki/Detector-Documentation#missing-assetcloseto-field-validation\n",
+      "check": "can-close-asset",
+      "impact": "High",
+      "confidence": "High",
+      "help": "Validate `AssetCloseTo` field in the LogicSig.",
+      "paths": []
+    },
+    {
+      "type": "ExecutionPaths",
+      "count": 10,
+      "description": "\nCheck: \"is-deletable\", Impact: High, Confidence: High\nDescription: Deletable Applications\n\nWiki: https://github.com/crytic/tealer/wiki/Detector-Documentation#deletable-application\n",
+      "check": "is-deletable",
+      "impact": "High",
+      "confidence": "High",
+      "help": "Do not approve `DeleteApplication` type application calls.",
+      "paths": [
+        {
+          "short": "0 -> 1 -> 2 -> 12 -> 33 -> 32 -> 34 -> 13 -> 35 -> 14",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "88: set:",
+              "91: txna ApplicationArgs 1",
+              "92: dup",
+              "93: intc_1",
+              "94: extract_uint16",
+              "95: intc_2",
+              "96: +",
+              "97: dig 1",
+              "98: len",
+              "99: ==",
+              "100: assert",
+              "101: extract 2 0",
+              "102: txna ApplicationArgs 2",
+              "103: dup",
+              "104: intc_1",
+              "105: extract_uint16",
+              "106: intc_2",
+              "107: +",
+              "108: dig 1",
+              "109: len",
+              "110: ==",
+              "111: assert",
+              "112: extract 2 0",
+              "115: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "118: callsub put"
+            ],
+            [
+              "502: put:",
+              "505: proto 2 0",
+              "508: frame_dig -2",
+              "509: len",
+              "512: dup",
+              "513: assert",
+              "516: intc_2",
+              "517: +",
+              "518: pushint 64",
+              "519: <=",
+              "525: assert",
+              "528: frame_dig -1",
+              "529: len",
+              "532: intc 4",
+              "533: <=",
+              "534: assert",
+              "537: bytec_0",
+              "538: frame_dig -2",
+              "539: concat",
+              "542: dup",
+              "543: box_del",
+              "544: pop",
+              "545: frame_dig -1",
+              "546: box_put",
+              "547: retsub"
+            ],
+            [
+              "121: intc_0",
+              "122: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 15 -> 33 -> 32 -> 34 -> 16 -> 35 -> 17",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "126: setBytes:",
+              "129: txna ApplicationArgs 1",
+              "130: dup",
+              "131: intc_1",
+              "132: extract_uint16",
+              "133: intc_2",
+              "134: +",
+              "135: dig 1",
+              "136: len",
+              "137: ==",
+              "138: assert",
+              "139: extract 2 0",
+              "140: txna ApplicationArgs 2",
+              "141: dup",
+              "142: intc_1",
+              "143: extract_uint16",
+              "144: intc_2",
+              "145: +",
+              "146: dig 1",
+              "147: len",
+              "148: ==",
+              "149: assert",
+              "150: extract 2 0",
+              "153: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "156: callsub put"
+            ],
+            [
+              "502: put:",
+              "505: proto 2 0",
+              "508: frame_dig -2",
+              "509: len",
+              "512: dup",
+              "513: assert",
+              "516: intc_2",
+              "517: +",
+              "518: pushint 64",
+              "519: <=",
+              "525: assert",
+              "528: frame_dig -1",
+              "529: len",
+              "532: intc 4",
+              "533: <=",
+              "534: assert",
+              "537: bytec_0",
+              "538: frame_dig -2",
+              "539: concat",
+              "542: dup",
+              "543: box_del",
+              "544: pop",
+              "545: frame_dig -1",
+              "546: box_put",
+              "547: retsub"
+            ],
+            [
+              "159: intc_0",
+              "160: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 18 -> 33 -> 32 -> 34 -> 19 -> 36 -> 20",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "164: concat:",
+              "167: txna ApplicationArgs 1",
+              "168: dup",
+              "169: intc_1",
+              "170: extract_uint16",
+              "171: intc_2",
+              "172: +",
+              "173: dig 1",
+              "174: len",
+              "175: ==",
+              "176: assert",
+              "177: extract 2 0",
+              "178: txna ApplicationArgs 2",
+              "179: dup",
+              "180: intc_1",
+              "181: extract_uint16",
+              "182: intc_2",
+              "183: +",
+              "184: dig 1",
+              "185: len",
+              "186: ==",
+              "187: assert",
+              "188: extract 2 0",
+              "191: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "194: callsub append"
+            ],
+            [
+              "551: append:",
+              "554: proto 2 0",
+              "557: bytec_0",
+              "558: frame_dig -2",
+              "559: concat",
+              "562: dup",
+              "563: box_len",
+              "564: assert",
+              "567: frame_dig -1",
+              "568: len",
+              "569: dig 1",
+              "570: +",
+              "573: dup",
+              "574: intc 4",
+              "575: <=",
+              "576: assert",
+              "579: dig 2",
+              "580: swap",
+              "581: UNSUPPORTED box_resize",
+              "584: frame_dig -1",
+              "585: box_replace",
+              "586: retsub"
+            ],
+            [
+              "197: intc_0",
+              "198: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 21 -> 33 -> 32 -> 34 -> 22 -> 36 -> 23",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "202: concatBytes:",
+              "205: txna ApplicationArgs 1",
+              "206: dup",
+              "207: intc_1",
+              "208: extract_uint16",
+              "209: intc_2",
+              "210: +",
+              "211: dig 1",
+              "212: len",
+              "213: ==",
+              "214: assert",
+              "215: extract 2 0",
+              "216: txna ApplicationArgs 2",
+              "217: dup",
+              "218: intc_1",
+              "219: extract_uint16",
+              "220: intc_2",
+              "221: +",
+              "222: dig 1",
+              "223: len",
+              "224: ==",
+              "225: assert",
+              "226: extract 2 0",
+              "229: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "232: callsub append"
+            ],
+            [
+              "551: append:",
+              "554: proto 2 0",
+              "557: bytec_0",
+              "558: frame_dig -2",
+              "559: concat",
+              "562: dup",
+              "563: box_len",
+              "564: assert",
+              "567: frame_dig -1",
+              "568: len",
+              "569: dig 1",
+              "570: +",
+              "573: dup",
+              "574: intc 4",
+              "575: <=",
+              "576: assert",
+              "579: dig 2",
+              "580: swap",
+              "581: UNSUPPORTED box_resize",
+              "584: frame_dig -1",
+              "585: box_replace",
+              "586: retsub"
+            ],
+            [
+              "235: intc_0",
+              "236: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 24 -> 33 -> 32 -> 34 -> 25",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "240: remove:",
+              "243: txna ApplicationArgs 1",
+              "244: dup",
+              "245: intc_1",
+              "246: extract_uint16",
+              "247: intc_2",
+              "248: +",
+              "249: dig 1",
+              "250: len",
+              "251: ==",
+              "252: assert",
+              "253: extract 2 0",
+              "256: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "259: bytec_0",
+              "260: swap",
+              "261: concat",
+              "264: dup",
+              "265: box_len",
+              "266: bury 1",
+              "267: assert",
+              "270: box_del",
+              "271: pop",
+              "274: intc_0",
+              "275: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 26 -> 33 -> 32 -> 34 -> 27",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "279: reclaim:",
+              "282: txna ApplicationArgs 1",
+              "283: dup",
+              "284: len",
+              "285: intc_3",
+              "286: ==",
+              "287: assert",
+              "288: btoi",
+              "291: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "294: dup",
+              "295: assert",
+              "298: global CurrentApplicationAddress",
+              "301: dup",
+              "302: acct_params_get AcctBalance",
+              "303: assert",
+              "304: dig 2",
+              "305: -",
+              "306: dig 1",
+              "307: acct_params_get AcctMinBalance",
+              "308: assert",
+              "309: >=",
+              "315: assert",
+              "325: itxn_begin",
+              "328: global CreatorAddress",
+              "329: uncover 2",
+              "330: itxn_field Amount",
+              "331: itxn_field Receiver",
+              "332: itxn_field Sender",
+              "341: intc_0",
+              "342: itxn_field TypeEnum",
+              "345: intc_1",
+              "346: itxn_field Fee",
+              "356: itxn_submit",
+              "359: intc_0",
+              "360: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 28 -> 32 -> 29",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "364: length:",
+              "367: txna ApplicationArgs 1",
+              "368: dup",
+              "369: intc_1",
+              "370: extract_uint16",
+              "371: intc_2",
+              "372: +",
+              "373: dig 1",
+              "374: len",
+              "375: ==",
+              "376: assert",
+              "377: extract 2 0",
+              "380: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "383: bytec_0",
+              "384: swap",
+              "385: concat",
+              "388: box_len",
+              "389: assert",
+              "392: itob",
+              "393: bytec_1",
+              "394: swap",
+              "395: concat",
+              "396: log",
+              "397: intc_0",
+              "398: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 30 -> 32 -> 31",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "402: extract:",
+              "405: txna ApplicationArgs 1",
+              "406: dup",
+              "407: intc_1",
+              "408: extract_uint16",
+              "409: intc_2",
+              "410: +",
+              "411: dig 1",
+              "412: len",
+              "413: ==",
+              "414: assert",
+              "415: extract 2 0",
+              "416: txna ApplicationArgs 2",
+              "417: dup",
+              "418: len",
+              "419: intc_3",
+              "420: ==",
+              "421: assert",
+              "422: btoi",
+              "423: txna ApplicationArgs 3",
+              "424: dup",
+              "425: len",
+              "426: intc_3",
+              "427: ==",
+              "428: assert",
+              "429: btoi",
+              "432: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "435: dup",
+              "436: pushint 1018",
+              "437: <=",
+              "438: assert",
+              "441: bytec_0",
+              "442: uncover 3",
+              "443: concat",
+              "446: dup",
+              "447: box_len",
+              "448: assert",
+              "451: dig 3",
+              "452: dig 3",
+              "453: +",
+              "454: >=",
+              "455: assert",
+              "458: cover 2",
+              "459: box_extract",
+              "462: dup",
+              "463: len",
+              "464: itob",
+              "465: extract 6 2",
+              "466: swap",
+              "467: concat",
+              "468: bytec_1",
+              "469: swap",
+              "470: concat",
+              "471: log",
+              "472: intc_0",
+              "473: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 4 -> 8 -> 33 -> 32 -> 34 -> 9",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "27: main_bare_routing@15:",
+              "30: txn OnCompletion",
+              "31: switch main_onCreate@16 main_after_if_else@20 main_after_if_else@20 main_after_if_else@20 main_onUpdate@17 main_onDelete@18"
+            ],
+            [
+              "51: main_onUpdate@17:",
+              "54: txn ApplicationID",
+              "55: assert",
+              "58: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "61: intc 6",
+              "62: assert",
+              "65: intc_0",
+              "66: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 4 -> 6 -> 33 -> 32 -> 34 -> 7",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "27: main_bare_routing@15:",
+              "30: txn OnCompletion",
+              "31: switch main_onCreate@16 main_after_if_else@20 main_after_if_else@20 main_after_if_else@20 main_onUpdate@17 main_onDelete@18"
+            ],
+            [
+              "34: main_onDelete@18:",
+              "37: txn ApplicationID",
+              "38: assert",
+              "41: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "44: intc 5",
+              "45: assert",
+              "48: intc_0",
+              "49: return"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ExecutionPaths",
+      "count": 10,
+      "description": "\nCheck: \"is-updatable\", Impact: High, Confidence: High\nDescription: Upgradable Applications\n\nWiki: https://github.com/crytic/tealer/wiki/Detector-Documentation#upgradable-application\n",
+      "check": "is-updatable",
+      "impact": "High",
+      "confidence": "High",
+      "help": "Do not approve `UpdateApplication` type application calls.",
+      "paths": [
+        {
+          "short": "0 -> 1 -> 2 -> 12 -> 33 -> 32 -> 34 -> 13 -> 35 -> 14",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "88: set:",
+              "91: txna ApplicationArgs 1",
+              "92: dup",
+              "93: intc_1",
+              "94: extract_uint16",
+              "95: intc_2",
+              "96: +",
+              "97: dig 1",
+              "98: len",
+              "99: ==",
+              "100: assert",
+              "101: extract 2 0",
+              "102: txna ApplicationArgs 2",
+              "103: dup",
+              "104: intc_1",
+              "105: extract_uint16",
+              "106: intc_2",
+              "107: +",
+              "108: dig 1",
+              "109: len",
+              "110: ==",
+              "111: assert",
+              "112: extract 2 0",
+              "115: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "118: callsub put"
+            ],
+            [
+              "502: put:",
+              "505: proto 2 0",
+              "508: frame_dig -2",
+              "509: len",
+              "512: dup",
+              "513: assert",
+              "516: intc_2",
+              "517: +",
+              "518: pushint 64",
+              "519: <=",
+              "525: assert",
+              "528: frame_dig -1",
+              "529: len",
+              "532: intc 4",
+              "533: <=",
+              "534: assert",
+              "537: bytec_0",
+              "538: frame_dig -2",
+              "539: concat",
+              "542: dup",
+              "543: box_del",
+              "544: pop",
+              "545: frame_dig -1",
+              "546: box_put",
+              "547: retsub"
+            ],
+            [
+              "121: intc_0",
+              "122: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 15 -> 33 -> 32 -> 34 -> 16 -> 35 -> 17",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "126: setBytes:",
+              "129: txna ApplicationArgs 1",
+              "130: dup",
+              "131: intc_1",
+              "132: extract_uint16",
+              "133: intc_2",
+              "134: +",
+              "135: dig 1",
+              "136: len",
+              "137: ==",
+              "138: assert",
+              "139: extract 2 0",
+              "140: txna ApplicationArgs 2",
+              "141: dup",
+              "142: intc_1",
+              "143: extract_uint16",
+              "144: intc_2",
+              "145: +",
+              "146: dig 1",
+              "147: len",
+              "148: ==",
+              "149: assert",
+              "150: extract 2 0",
+              "153: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "156: callsub put"
+            ],
+            [
+              "502: put:",
+              "505: proto 2 0",
+              "508: frame_dig -2",
+              "509: len",
+              "512: dup",
+              "513: assert",
+              "516: intc_2",
+              "517: +",
+              "518: pushint 64",
+              "519: <=",
+              "525: assert",
+              "528: frame_dig -1",
+              "529: len",
+              "532: intc 4",
+              "533: <=",
+              "534: assert",
+              "537: bytec_0",
+              "538: frame_dig -2",
+              "539: concat",
+              "542: dup",
+              "543: box_del",
+              "544: pop",
+              "545: frame_dig -1",
+              "546: box_put",
+              "547: retsub"
+            ],
+            [
+              "159: intc_0",
+              "160: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 18 -> 33 -> 32 -> 34 -> 19 -> 36 -> 20",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "164: concat:",
+              "167: txna ApplicationArgs 1",
+              "168: dup",
+              "169: intc_1",
+              "170: extract_uint16",
+              "171: intc_2",
+              "172: +",
+              "173: dig 1",
+              "174: len",
+              "175: ==",
+              "176: assert",
+              "177: extract 2 0",
+              "178: txna ApplicationArgs 2",
+              "179: dup",
+              "180: intc_1",
+              "181: extract_uint16",
+              "182: intc_2",
+              "183: +",
+              "184: dig 1",
+              "185: len",
+              "186: ==",
+              "187: assert",
+              "188: extract 2 0",
+              "191: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "194: callsub append"
+            ],
+            [
+              "551: append:",
+              "554: proto 2 0",
+              "557: bytec_0",
+              "558: frame_dig -2",
+              "559: concat",
+              "562: dup",
+              "563: box_len",
+              "564: assert",
+              "567: frame_dig -1",
+              "568: len",
+              "569: dig 1",
+              "570: +",
+              "573: dup",
+              "574: intc 4",
+              "575: <=",
+              "576: assert",
+              "579: dig 2",
+              "580: swap",
+              "581: UNSUPPORTED box_resize",
+              "584: frame_dig -1",
+              "585: box_replace",
+              "586: retsub"
+            ],
+            [
+              "197: intc_0",
+              "198: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 21 -> 33 -> 32 -> 34 -> 22 -> 36 -> 23",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "202: concatBytes:",
+              "205: txna ApplicationArgs 1",
+              "206: dup",
+              "207: intc_1",
+              "208: extract_uint16",
+              "209: intc_2",
+              "210: +",
+              "211: dig 1",
+              "212: len",
+              "213: ==",
+              "214: assert",
+              "215: extract 2 0",
+              "216: txna ApplicationArgs 2",
+              "217: dup",
+              "218: intc_1",
+              "219: extract_uint16",
+              "220: intc_2",
+              "221: +",
+              "222: dig 1",
+              "223: len",
+              "224: ==",
+              "225: assert",
+              "226: extract 2 0",
+              "229: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "232: callsub append"
+            ],
+            [
+              "551: append:",
+              "554: proto 2 0",
+              "557: bytec_0",
+              "558: frame_dig -2",
+              "559: concat",
+              "562: dup",
+              "563: box_len",
+              "564: assert",
+              "567: frame_dig -1",
+              "568: len",
+              "569: dig 1",
+              "570: +",
+              "573: dup",
+              "574: intc 4",
+              "575: <=",
+              "576: assert",
+              "579: dig 2",
+              "580: swap",
+              "581: UNSUPPORTED box_resize",
+              "584: frame_dig -1",
+              "585: box_replace",
+              "586: retsub"
+            ],
+            [
+              "235: intc_0",
+              "236: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 24 -> 33 -> 32 -> 34 -> 25",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "240: remove:",
+              "243: txna ApplicationArgs 1",
+              "244: dup",
+              "245: intc_1",
+              "246: extract_uint16",
+              "247: intc_2",
+              "248: +",
+              "249: dig 1",
+              "250: len",
+              "251: ==",
+              "252: assert",
+              "253: extract 2 0",
+              "256: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "259: bytec_0",
+              "260: swap",
+              "261: concat",
+              "264: dup",
+              "265: box_len",
+              "266: bury 1",
+              "267: assert",
+              "270: box_del",
+              "271: pop",
+              "274: intc_0",
+              "275: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 26 -> 33 -> 32 -> 34 -> 27",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "279: reclaim:",
+              "282: txna ApplicationArgs 1",
+              "283: dup",
+              "284: len",
+              "285: intc_3",
+              "286: ==",
+              "287: assert",
+              "288: btoi",
+              "291: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "294: dup",
+              "295: assert",
+              "298: global CurrentApplicationAddress",
+              "301: dup",
+              "302: acct_params_get AcctBalance",
+              "303: assert",
+              "304: dig 2",
+              "305: -",
+              "306: dig 1",
+              "307: acct_params_get AcctMinBalance",
+              "308: assert",
+              "309: >=",
+              "315: assert",
+              "325: itxn_begin",
+              "328: global CreatorAddress",
+              "329: uncover 2",
+              "330: itxn_field Amount",
+              "331: itxn_field Receiver",
+              "332: itxn_field Sender",
+              "341: intc_0",
+              "342: itxn_field TypeEnum",
+              "345: intc_1",
+              "346: itxn_field Fee",
+              "356: itxn_submit",
+              "359: intc_0",
+              "360: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 28 -> 32 -> 29",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "364: length:",
+              "367: txna ApplicationArgs 1",
+              "368: dup",
+              "369: intc_1",
+              "370: extract_uint16",
+              "371: intc_2",
+              "372: +",
+              "373: dig 1",
+              "374: len",
+              "375: ==",
+              "376: assert",
+              "377: extract 2 0",
+              "380: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "383: bytec_0",
+              "384: swap",
+              "385: concat",
+              "388: box_len",
+              "389: assert",
+              "392: itob",
+              "393: bytec_1",
+              "394: swap",
+              "395: concat",
+              "396: log",
+              "397: intc_0",
+              "398: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 30 -> 32 -> 31",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "402: extract:",
+              "405: txna ApplicationArgs 1",
+              "406: dup",
+              "407: intc_1",
+              "408: extract_uint16",
+              "409: intc_2",
+              "410: +",
+              "411: dig 1",
+              "412: len",
+              "413: ==",
+              "414: assert",
+              "415: extract 2 0",
+              "416: txna ApplicationArgs 2",
+              "417: dup",
+              "418: len",
+              "419: intc_3",
+              "420: ==",
+              "421: assert",
+              "422: btoi",
+              "423: txna ApplicationArgs 3",
+              "424: dup",
+              "425: len",
+              "426: intc_3",
+              "427: ==",
+              "428: assert",
+              "429: btoi",
+              "432: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "435: dup",
+              "436: pushint 1018",
+              "437: <=",
+              "438: assert",
+              "441: bytec_0",
+              "442: uncover 3",
+              "443: concat",
+              "446: dup",
+              "447: box_len",
+              "448: assert",
+              "451: dig 3",
+              "452: dig 3",
+              "453: +",
+              "454: >=",
+              "455: assert",
+              "458: cover 2",
+              "459: box_extract",
+              "462: dup",
+              "463: len",
+              "464: itob",
+              "465: extract 6 2",
+              "466: swap",
+              "467: concat",
+              "468: bytec_1",
+              "469: swap",
+              "470: concat",
+              "471: log",
+              "472: intc_0",
+              "473: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 4 -> 8 -> 33 -> 32 -> 34 -> 9",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "27: main_bare_routing@15:",
+              "30: txn OnCompletion",
+              "31: switch main_onCreate@16 main_after_if_else@20 main_after_if_else@20 main_after_if_else@20 main_onUpdate@17 main_onDelete@18"
+            ],
+            [
+              "51: main_onUpdate@17:",
+              "54: txn ApplicationID",
+              "55: assert",
+              "58: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "61: intc 6",
+              "62: assert",
+              "65: intc_0",
+              "66: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 4 -> 6 -> 33 -> 32 -> 34 -> 7",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "27: main_bare_routing@15:",
+              "30: txn OnCompletion",
+              "31: switch main_onCreate@16 main_after_if_else@20 main_after_if_else@20 main_after_if_else@20 main_onUpdate@17 main_onDelete@18"
+            ],
+            [
+              "34: main_onDelete@18:",
+              "37: txn ApplicationID",
+              "38: assert",
+              "41: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "44: intc 5",
+              "45: assert",
+              "48: intc_0",
+              "49: return"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ExecutionPaths",
+      "count": 11,
+      "description": "\nCheck: \"missing-fee-check\", Impact: High, Confidence: High\nDescription: Missing Fee Field Validation\n\nWiki: https://github.com/crytic/tealer/wiki/Detector-Documentation#missing-fee-field-validation\n",
+      "check": "missing-fee-check",
+      "impact": "High",
+      "confidence": "High",
+      "help": "Validate `Fee` field in the LogicSig.",
+      "paths": [
+        {
+          "short": "0 -> 1 -> 2 -> 12 -> 33 -> 32 -> 34 -> 13 -> 35 -> 14",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "88: set:",
+              "91: txna ApplicationArgs 1",
+              "92: dup",
+              "93: intc_1",
+              "94: extract_uint16",
+              "95: intc_2",
+              "96: +",
+              "97: dig 1",
+              "98: len",
+              "99: ==",
+              "100: assert",
+              "101: extract 2 0",
+              "102: txna ApplicationArgs 2",
+              "103: dup",
+              "104: intc_1",
+              "105: extract_uint16",
+              "106: intc_2",
+              "107: +",
+              "108: dig 1",
+              "109: len",
+              "110: ==",
+              "111: assert",
+              "112: extract 2 0",
+              "115: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "118: callsub put"
+            ],
+            [
+              "502: put:",
+              "505: proto 2 0",
+              "508: frame_dig -2",
+              "509: len",
+              "512: dup",
+              "513: assert",
+              "516: intc_2",
+              "517: +",
+              "518: pushint 64",
+              "519: <=",
+              "525: assert",
+              "528: frame_dig -1",
+              "529: len",
+              "532: intc 4",
+              "533: <=",
+              "534: assert",
+              "537: bytec_0",
+              "538: frame_dig -2",
+              "539: concat",
+              "542: dup",
+              "543: box_del",
+              "544: pop",
+              "545: frame_dig -1",
+              "546: box_put",
+              "547: retsub"
+            ],
+            [
+              "121: intc_0",
+              "122: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 15 -> 33 -> 32 -> 34 -> 16 -> 35 -> 17",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "126: setBytes:",
+              "129: txna ApplicationArgs 1",
+              "130: dup",
+              "131: intc_1",
+              "132: extract_uint16",
+              "133: intc_2",
+              "134: +",
+              "135: dig 1",
+              "136: len",
+              "137: ==",
+              "138: assert",
+              "139: extract 2 0",
+              "140: txna ApplicationArgs 2",
+              "141: dup",
+              "142: intc_1",
+              "143: extract_uint16",
+              "144: intc_2",
+              "145: +",
+              "146: dig 1",
+              "147: len",
+              "148: ==",
+              "149: assert",
+              "150: extract 2 0",
+              "153: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "156: callsub put"
+            ],
+            [
+              "502: put:",
+              "505: proto 2 0",
+              "508: frame_dig -2",
+              "509: len",
+              "512: dup",
+              "513: assert",
+              "516: intc_2",
+              "517: +",
+              "518: pushint 64",
+              "519: <=",
+              "525: assert",
+              "528: frame_dig -1",
+              "529: len",
+              "532: intc 4",
+              "533: <=",
+              "534: assert",
+              "537: bytec_0",
+              "538: frame_dig -2",
+              "539: concat",
+              "542: dup",
+              "543: box_del",
+              "544: pop",
+              "545: frame_dig -1",
+              "546: box_put",
+              "547: retsub"
+            ],
+            [
+              "159: intc_0",
+              "160: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 18 -> 33 -> 32 -> 34 -> 19 -> 36 -> 20",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "164: concat:",
+              "167: txna ApplicationArgs 1",
+              "168: dup",
+              "169: intc_1",
+              "170: extract_uint16",
+              "171: intc_2",
+              "172: +",
+              "173: dig 1",
+              "174: len",
+              "175: ==",
+              "176: assert",
+              "177: extract 2 0",
+              "178: txna ApplicationArgs 2",
+              "179: dup",
+              "180: intc_1",
+              "181: extract_uint16",
+              "182: intc_2",
+              "183: +",
+              "184: dig 1",
+              "185: len",
+              "186: ==",
+              "187: assert",
+              "188: extract 2 0",
+              "191: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "194: callsub append"
+            ],
+            [
+              "551: append:",
+              "554: proto 2 0",
+              "557: bytec_0",
+              "558: frame_dig -2",
+              "559: concat",
+              "562: dup",
+              "563: box_len",
+              "564: assert",
+              "567: frame_dig -1",
+              "568: len",
+              "569: dig 1",
+              "570: +",
+              "573: dup",
+              "574: intc 4",
+              "575: <=",
+              "576: assert",
+              "579: dig 2",
+              "580: swap",
+              "581: UNSUPPORTED box_resize",
+              "584: frame_dig -1",
+              "585: box_replace",
+              "586: retsub"
+            ],
+            [
+              "197: intc_0",
+              "198: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 21 -> 33 -> 32 -> 34 -> 22 -> 36 -> 23",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "202: concatBytes:",
+              "205: txna ApplicationArgs 1",
+              "206: dup",
+              "207: intc_1",
+              "208: extract_uint16",
+              "209: intc_2",
+              "210: +",
+              "211: dig 1",
+              "212: len",
+              "213: ==",
+              "214: assert",
+              "215: extract 2 0",
+              "216: txna ApplicationArgs 2",
+              "217: dup",
+              "218: intc_1",
+              "219: extract_uint16",
+              "220: intc_2",
+              "221: +",
+              "222: dig 1",
+              "223: len",
+              "224: ==",
+              "225: assert",
+              "226: extract 2 0",
+              "229: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "232: callsub append"
+            ],
+            [
+              "551: append:",
+              "554: proto 2 0",
+              "557: bytec_0",
+              "558: frame_dig -2",
+              "559: concat",
+              "562: dup",
+              "563: box_len",
+              "564: assert",
+              "567: frame_dig -1",
+              "568: len",
+              "569: dig 1",
+              "570: +",
+              "573: dup",
+              "574: intc 4",
+              "575: <=",
+              "576: assert",
+              "579: dig 2",
+              "580: swap",
+              "581: UNSUPPORTED box_resize",
+              "584: frame_dig -1",
+              "585: box_replace",
+              "586: retsub"
+            ],
+            [
+              "235: intc_0",
+              "236: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 24 -> 33 -> 32 -> 34 -> 25",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "240: remove:",
+              "243: txna ApplicationArgs 1",
+              "244: dup",
+              "245: intc_1",
+              "246: extract_uint16",
+              "247: intc_2",
+              "248: +",
+              "249: dig 1",
+              "250: len",
+              "251: ==",
+              "252: assert",
+              "253: extract 2 0",
+              "256: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "259: bytec_0",
+              "260: swap",
+              "261: concat",
+              "264: dup",
+              "265: box_len",
+              "266: bury 1",
+              "267: assert",
+              "270: box_del",
+              "271: pop",
+              "274: intc_0",
+              "275: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 26 -> 33 -> 32 -> 34 -> 27",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "279: reclaim:",
+              "282: txna ApplicationArgs 1",
+              "283: dup",
+              "284: len",
+              "285: intc_3",
+              "286: ==",
+              "287: assert",
+              "288: btoi",
+              "291: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "294: dup",
+              "295: assert",
+              "298: global CurrentApplicationAddress",
+              "301: dup",
+              "302: acct_params_get AcctBalance",
+              "303: assert",
+              "304: dig 2",
+              "305: -",
+              "306: dig 1",
+              "307: acct_params_get AcctMinBalance",
+              "308: assert",
+              "309: >=",
+              "315: assert",
+              "325: itxn_begin",
+              "328: global CreatorAddress",
+              "329: uncover 2",
+              "330: itxn_field Amount",
+              "331: itxn_field Receiver",
+              "332: itxn_field Sender",
+              "341: intc_0",
+              "342: itxn_field TypeEnum",
+              "345: intc_1",
+              "346: itxn_field Fee",
+              "356: itxn_submit",
+              "359: intc_0",
+              "360: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 28 -> 32 -> 29",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "364: length:",
+              "367: txna ApplicationArgs 1",
+              "368: dup",
+              "369: intc_1",
+              "370: extract_uint16",
+              "371: intc_2",
+              "372: +",
+              "373: dig 1",
+              "374: len",
+              "375: ==",
+              "376: assert",
+              "377: extract 2 0",
+              "380: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "383: bytec_0",
+              "384: swap",
+              "385: concat",
+              "388: box_len",
+              "389: assert",
+              "392: itob",
+              "393: bytec_1",
+              "394: swap",
+              "395: concat",
+              "396: log",
+              "397: intc_0",
+              "398: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 2 -> 30 -> 32 -> 31",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "13: txn OnCompletion",
+              "14: !",
+              "15: assert",
+              "16: txn ApplicationID",
+              "17: assert",
+              "18: pushbytess 0xa8617ccd 0xd2ff278a 0x53013bdb 0x448a3c82 0x8e8900b9 0x4eff516d 0x42f2d921 0xacca05bc",
+              "19: txna ApplicationArgs 0",
+              "20: match set setBytes concat concatBytes remove reclaim length extract"
+            ],
+            [
+              "402: extract:",
+              "405: txna ApplicationArgs 1",
+              "406: dup",
+              "407: intc_1",
+              "408: extract_uint16",
+              "409: intc_2",
+              "410: +",
+              "411: dig 1",
+              "412: len",
+              "413: ==",
+              "414: assert",
+              "415: extract 2 0",
+              "416: txna ApplicationArgs 2",
+              "417: dup",
+              "418: len",
+              "419: intc_3",
+              "420: ==",
+              "421: assert",
+              "422: btoi",
+              "423: txna ApplicationArgs 3",
+              "424: dup",
+              "425: len",
+              "426: intc_3",
+              "427: ==",
+              "428: assert",
+              "429: btoi",
+              "432: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "435: dup",
+              "436: pushint 1018",
+              "437: <=",
+              "438: assert",
+              "441: bytec_0",
+              "442: uncover 3",
+              "443: concat",
+              "446: dup",
+              "447: box_len",
+              "448: assert",
+              "451: dig 3",
+              "452: dig 3",
+              "453: +",
+              "454: >=",
+              "455: assert",
+              "458: cover 2",
+              "459: box_extract",
+              "462: dup",
+              "463: len",
+              "464: itob",
+              "465: extract 6 2",
+              "466: swap",
+              "467: concat",
+              "468: bytec_1",
+              "469: swap",
+              "470: concat",
+              "471: log",
+              "472: intc_0",
+              "473: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 4 -> 10 -> 32 -> 11",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "27: main_bare_routing@15:",
+              "30: txn OnCompletion",
+              "31: switch main_onCreate@16 main_after_if_else@20 main_after_if_else@20 main_after_if_else@20 main_onUpdate@17 main_onDelete@18"
+            ],
+            [
+              "68: main_onCreate@16:",
+              "71: txn ApplicationID",
+              "72: !",
+              "73: assert",
+              "76: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "79: intc_0",
+              "80: UNSUPPORTED app_params_set AppForeignBoxReads",
+              "83: intc_0",
+              "84: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 4 -> 8 -> 33 -> 32 -> 34 -> 9",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "27: main_bare_routing@15:",
+              "30: txn OnCompletion",
+              "31: switch main_onCreate@16 main_after_if_else@20 main_after_if_else@20 main_after_if_else@20 main_onUpdate@17 main_onDelete@18"
+            ],
+            [
+              "51: main_onUpdate@17:",
+              "54: txn ApplicationID",
+              "55: assert",
+              "58: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "61: intc 6",
+              "62: assert",
+              "65: intc_0",
+              "66: return"
+            ]
+          ]
+        },
+        {
+          "short": "0 -> 1 -> 4 -> 6 -> 33 -> 32 -> 34 -> 7",
+          "blocks": [
+            [
+              "1: #pragma version 13",
+              "2: UNSUPPORTED #pragma typetrack false",
+              "3: UNSUPPORTED #pragma autosalt false"
+            ],
+            [
+              "6: main:",
+              "7: intcblock 1 0 2 8 32768 1 0",
+              "8: bytecblock \"o_\" 0x151f7c75",
+              "11: txn NumAppArgs",
+              "12: bz main_bare_routing@15"
+            ],
+            [
+              "27: main_bare_routing@15:",
+              "30: txn OnCompletion",
+              "31: switch main_onCreate@16 main_after_if_else@20 main_after_if_else@20 main_after_if_else@20 main_onUpdate@17 main_onDelete@18"
+            ],
+            [
+              "34: main_onDelete@18:",
+              "37: txn ApplicationID",
+              "38: assert",
+              "41: callsub authorize"
+            ],
+            [
+              "488: authorize:",
+              "491: callsub assertNoRekey"
+            ],
+            [
+              "477: assertNoRekey:",
+              "480: txn RekeyTo",
+              "481: global ZeroAddress",
+              "482: ==",
+              "483: assert",
+              "484: retsub"
+            ],
+            [
+              "494: txn Sender",
+              "495: global CreatorAddress",
+              "496: ==",
+              "497: assert",
+              "498: retsub"
+            ],
+            [
+              "44: intc 5",
+              "45: assert",
+              "48: intc_0",
+              "49: return"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "type": "ExecutionPaths",
+      "count": 0,
+      "description": "\nCheck: \"group-size-check\", Impact: High, Confidence: High\nDescription: Usage of absolute indexes without validating GroupSize\n\nWiki: https://github.com/crytic/tealer/wiki/Detector-Documentation#missing-groupsize-validation\n",
+      "check": "group-size-check",
+      "impact": "High",
+      "confidence": "High",
+      "help": "- Avoid using absolute indexes. Validate GroupSize if used.\n- Favor using ARC-4 ABI and relative indexes for group transactions.",
+      "paths": []
+    },
+    {
+      "type": "ExecutionPaths",
+      "count": 0,
+      "description": "\nCheck: \"rekey-to\", Impact: High, Confidence: High\nDescription: Rekeyable Logic Signatures\n\nWiki: https://github.com/crytic/tealer/wiki/Detector-Documentation#rekeyable-logicsig\n",
+      "check": "rekey-to",
+      "impact": "High",
+      "confidence": "High",
+      "help": "Validate `RekeyTo` field in the LogicSig.",
+      "paths": []
+    }
+  ]
+}

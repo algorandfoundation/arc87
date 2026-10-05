@@ -1,0 +1,85 @@
+{
+  "$comment": "ARC-87 segment escaping vectors. escapeSegment(segment) wraps a single path segment as ${...} when it contains any reserved character (`.`, `[`, `]`, `$`, `{`); otherwise it is returned unchanged. unescapeSegment(escaped) MUST return the original segment. An escaped span is opaque to readers: `.` and `[N]` inside it are never interpreted. `~` is not reserved; ARC-87 gives no meaning to a `${~...}` span (template selectors are left to a future specification), so such a span is read as an escaped literal like any other. `reserved` lists the characters that trigger escaping.",
+  "reserved": [".", "[", "]", "$", "{"],
+  "cases": [
+    {
+      "name": "plain",
+      "segment": "alice",
+      "escaped": "alice",
+      "isEscaped": false
+    },
+    { "name": "dot", "segment": "a.b", "escaped": "${a.b}", "isEscaped": true },
+    {
+      "name": "open bracket",
+      "segment": "c[0",
+      "escaped": "${c[0}",
+      "isEscaped": true
+    },
+    {
+      "name": "bracket index text",
+      "segment": "c[0]",
+      "escaped": "${c[0]}",
+      "isEscaped": true
+    },
+    {
+      "name": "dollar",
+      "segment": "$price",
+      "escaped": "${$price}",
+      "isEscaped": true
+    },
+    {
+      "name": "open brace",
+      "segment": "with{brace",
+      "escaped": "${with{brace}",
+      "isEscaped": true
+    },
+    {
+      "name": "close brace alone is not reserved",
+      "segment": "plain}brace",
+      "escaped": "plain}brace",
+      "isEscaped": false
+    },
+    {
+      "name": "already-escaped-looking literal is wrapped again",
+      "segment": "${x}",
+      "escaped": "${${x}}",
+      "isEscaped": true
+    },
+    {
+      "name": "tilde alone is not reserved",
+      "segment": "~home",
+      "escaped": "~home",
+      "isEscaped": false
+    },
+    {
+      "name": "tilde literal with reserved char is an ordinary escaped literal",
+      "segment": "~a.b",
+      "escaped": "${~a.b}",
+      "isEscaped": true
+    },
+    {
+      "name": "numeric segment is not escaped",
+      "segment": "1",
+      "escaped": "1",
+      "isEscaped": false
+    },
+    {
+      "name": "unicode is not reserved",
+      "segment": "héllo wörld",
+      "escaped": "héllo wörld",
+      "isEscaped": false
+    },
+    {
+      "name": "empty segment",
+      "segment": "",
+      "escaped": "",
+      "isEscaped": false
+    },
+    {
+      "name": "mixed reserved characters",
+      "segment": "a.b[1]$c{d",
+      "escaped": "${a.b[1]$c{d}",
+      "isEscaped": true
+    }
+  ]
+}

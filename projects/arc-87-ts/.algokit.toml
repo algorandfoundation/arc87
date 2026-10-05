@@ -1,0 +1,34 @@
+[algokit]
+min_version = "v2.6.0"
+
+[project]
+type = 'contract'
+name = 'arc-87-ts'
+artifacts = 'smart_contracts/artifacts'
+
+[project.run]
+build = { commands = ['npm run build'], description = 'Compile arc87.algo.ts with puya-ts, generate the typed client and typecheck' }
+test = { commands = ['npm test'], description = 'Run the offline contract tests (algorand-typescript-testing)' }
+test-integration = { commands = ['npm run test:integration'], description = 'Run the localnet integration tests (requires `algokit localnet start`)' }
+lint = { commands = ['npm run lint'], description = 'Lint and format check with Biome' }
+clean = { commands = ['npm run clean'], description = 'Remove build artifacts' }
+# Tealer refuses TEAL containing TMPL_* placeholders, so the approval program is first copied with
+# the demo's template values substituted (DELETABLE=1, UPDATABLE=0). Only the approval program is
+# analyzed: the always-approve clear program triggers generic false positives. Like the Python
+# project, Tealer reports `missing-fee-check` on every application execution path (including
+# paths without an inner transaction), so that detector is excluded alongside the two planned ones.
+# The public `readonly` reads (`length`/`extract`) deliberately carry no creator
+# check; Tealer then reports `unprotected-updatable` / `unprotected-deletable` on their paths even
+# though the ARC-4 router already restricts them to NoOp (`txn OnCompletion; !; assert`, a form the
+# detector does not recognise) — false positives, excluded as well.
+audit-teal = { commands = [
+  'npm run audit:prepare',
+  'algokit task analyze smart_contracts/artifacts/audit/ARC87.approval.teal --force --exclude is-updatable --exclude is-deletable --exclude missing-fee-check --exclude unprotected-updatable --exclude unprotected-deletable',
+], description = 'Audit the compiled approval program with Tealer (run build first)' }
+
+[project.deploy]
+command = "npm run demo"
+environment_secrets = []
+
+[project.deploy.localnet]
+environment_secrets = []

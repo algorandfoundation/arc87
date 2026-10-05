@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "arc-87-py"
+version = "0.0.0"
+description = "ARC-87 reference key-value contract in Algorand Python (puyapy) with vector-driven tests"
+authors = ["Algorand Foundation"]
+license = "CC0-1.0"
+readme = "README.md"
+packages = [{ include = "smart_contracts" }]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+algorand-python = "^4.0.0"
+
+[tool.poetry.group.dev.dependencies]
+algorand-python-testing = "^1.1.0"
+py-algorand-sdk = "^2.6.0"
+pytest = "^8.0.0"
+puyapy = "*"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

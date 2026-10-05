@@ -1,0 +1,92 @@
+{
+  "$comment": "ARC-87 toPaths vectors. `paths` are the dotted paths emitted by toPaths(object) (no prefix); `keys` are the full box keys (PREFIX + path). Leaves are scalars or empty containers. Arrays are indexed with the canonical `[N]` form. Segments containing any of . [ ] $ { are wrapped as ${...}. Order follows object key insertion order.",
+  "prefix": "o_",
+  "cases": [
+    {
+      "name": "spec: JSON/Objects table",
+      "object": {
+        "alice": "APZK5I5UAURBDSGFBEHYK3B235CDGYGXG6BAGC34ZHGDPQOJTBM5OSG6IE",
+        "bob": "BX2RWWE77PA7JNNIPWUBQYX44LDHDE6EBRFEPLJUOMBNLT4ATQ3SA7UGEQ",
+        "metadata": { "rp": "algorand.co" }
+      },
+      "paths": ["alice", "bob", "metadata.rp"],
+      "keys": ["o_alice", "o_bob", "o_metadata.rp"]
+    },
+    {
+      "name": "spec: Blob/File table",
+      "object": {
+        "index": 2,
+        "mime": "text/plain",
+        "blobs": ["...", "..."]
+      },
+      "paths": ["index", "mime", "blobs[0]", "blobs[1]"],
+      "keys": ["o_index", "o_mime", "o_blobs[0]", "o_blobs[1]"]
+    },
+    {
+      "name": "array of objects",
+      "object": { "items": [{ "id": 1 }, { "id": 2 }] },
+      "paths": ["items[0].id", "items[1].id"],
+      "keys": ["o_items[0].id", "o_items[1].id"]
+    },
+    {
+      "name": "nested arrays",
+      "object": { "m": [[1, 2], [3]] },
+      "paths": ["m[0][0]", "m[0][1]", "m[1][0]"],
+      "keys": ["o_m[0][0]", "o_m[0][1]", "o_m[1][0]"]
+    },
+    {
+      "name": "empty object",
+      "object": {},
+      "paths": [],
+      "keys": []
+    },
+    {
+      "name": "empty containers are leaves",
+      "object": { "a": [], "b": {}, "c": [[]] },
+      "paths": ["a", "b", "c[0]"],
+      "keys": ["o_a", "o_b", "o_c[0]"]
+    },
+    {
+      "name": "null leaves are kept",
+      "object": { "a": null, "b": { "c": null } },
+      "paths": ["a", "b.c"],
+      "keys": ["o_a", "o_b.c"]
+    },
+    {
+      "name": "segments with reserved characters are escaped",
+      "object": {
+        "a.b": 1,
+        "x": { "c[0]": "y" },
+        "$price": 3,
+        "with{brace": 4,
+        "plain}brace": 5
+      },
+      "paths": [
+        "${a.b}",
+        "x.${c[0]}",
+        "${$price}",
+        "${with{brace}",
+        "plain}brace"
+      ],
+      "keys": [
+        "o_${a.b}",
+        "o_x.${c[0]}",
+        "o_${$price}",
+        "o_${with{brace}",
+        "o_plain}brace"
+      ]
+    },
+    {
+      "name": "numeric object keys are emitted as dotted (not indexed)",
+      "object": { "a": { "1": "one" } },
+      "paths": ["a.1"],
+      "keys": ["o_a.1"]
+    },
+    {
+      "name": "unicode segments are not escaped",
+      "object": { "héllo": { "wörld": "✓" } },
+      "paths": ["héllo.wörld"],
+      "keys": ["o_héllo.wörld"]
+    }
+  ]
+}

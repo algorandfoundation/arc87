@@ -1,0 +1,14 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "smart_contracts/**/*.ts",
+    "src/**/*.ts",
+    "examples/**/*.ts",
+    "scripts/**/*.ts",
+    "tests/**/*.ts",
+    "vitest.*.ts",
+    "vitest.config.mts",
+    "vitest.integration.config.mts"
+  ],
+  "exclude": ["node_modules", "smart_contracts/artifacts"]
+}

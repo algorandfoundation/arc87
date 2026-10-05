@@ -1,0 +1,123 @@
+{
+  "$comment": "ARC-87 minimum balance requirement vectors. toMBR(object) = MIN_BALANCE + sum over every box of (PER_BOX + PER_UNIT * (utf8Bytes(key) + utf8Bytes(value))). Values are the leaf serialised with String(value) and encoded as UTF-8 (numbers become their decimal text, null becomes 'null'). Keys are the full box keys PREFIX + path, measured in UTF-8 bytes. ARC-87 does not define how key names longer than MAX_KEY_SIZE are stored (templatization is left to a future specification), so a key longer than MAX_KEY_SIZE or a value longer than MAX_BOX_SIZE MUST throw MaxSizeError rather than being rewritten. `errors` lists `{ [key]: 'a'.repeat(valueLength) }` objects with the byte length of the full key and the expected error (null when accepted). `mbr` is expressed in microAlgos as a decimal string so bigint consumers do not lose precision.",
+  "constants": {
+    "MIN_BALANCE": 100000,
+    "PER_BOX": 2500,
+    "PER_UNIT": 400,
+    "MAX_KEY_SIZE": 64,
+    "MAX_BOX_SIZE": 32768,
+    "PREFIX": "o_"
+  },
+  "cases": [
+    {
+      "name": "empty object only costs the minimum balance",
+      "object": {},
+      "boxes": [],
+      "mbr": "100000"
+    },
+    {
+      "name": "store-kit regression: single short key",
+      "object": { "heyzzz": "you" },
+      "boxes": [["o_heyzzz", "you"]],
+      "mbr": "106900"
+    },
+    {
+      "name": "spec: JSON/Objects table",
+      "object": {
+        "alice": "APZK5I5UAURBDSGFBEHYK3B235CDGYGXG6BAGC34ZHGDPQOJTBM5OSG6IE",
+        "bob": "BX2RWWE77PA7JNNIPWUBQYX44LDHDE6EBRFEPLJUOMBNLT4ATQ3SA7UGEQ",
+        "metadata": { "rp": "algorand.co" }
+      },
+      "boxes": [
+        [
+          "o_alice",
+          "APZK5I5UAURBDSGFBEHYK3B235CDGYGXG6BAGC34ZHGDPQOJTBM5OSG6IE"
+        ],
+        ["o_bob", "BX2RWWE77PA7JNNIPWUBQYX44LDHDE6EBRFEPLJUOMBNLT4ATQ3SA7UGEQ"],
+        ["o_metadata.rp", "algorand.co"]
+      ],
+      "mbr": "168300"
+    },
+    {
+      "name": "spec: Blob/File table (number serialised as text)",
+      "object": { "index": 2, "mime": "text/plain", "blobs": ["...", "..."] },
+      "boxes": [
+        ["o_index", "2"],
+        ["o_mime", "text/plain"],
+        ["o_blobs[0]", "..."],
+        ["o_blobs[1]", "..."]
+      ],
+      "mbr": "130000"
+    },
+    {
+      "name": "escaped segments are charged at their escaped length",
+      "object": { "a.b": 1, "x": { "c[0]": "y" } },
+      "boxes": [["o_${a.b}", "1"], ["o_x.${c[0]}", "y"]],
+      "mbr": "113400"
+    },
+    {
+      "name": "key of exactly 64 bytes is charged in full",
+      "object": {
+        "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx": "v"
+      },
+      "boxes": [
+        [
+          "o_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+          "v"
+        ]
+      ],
+      "mbr": "128500"
+    },
+    {
+      "name": "unicode key is charged in bytes (31 chars, 64 bytes)",
+      "object": { "ééééééééééééééééééééééééééééééé": "v" },
+      "boxes": [["o_ééééééééééééééééééééééééééééééé", "v"]],
+      "mbr": "128500"
+    }
+  ],
+  "errors": [
+    {
+      "$comment": "The test builds { [key]: 'a'.repeat(valueLength) } before calling toMBR; keyBytes is utf8Bytes(PREFIX + key).",
+      "name": "value of MAX_BOX_SIZE bytes is accepted",
+      "key": "blob",
+      "keyBytes": 6,
+      "valueLength": 32768,
+      "error": null
+    },
+    {
+      "name": "value larger than MAX_BOX_SIZE throws MaxSizeError",
+      "key": "blob",
+      "keyBytes": 6,
+      "valueLength": 32769,
+      "error": "MaxSizeError"
+    },
+    {
+      "name": "key of exactly MAX_KEY_SIZE bytes is accepted",
+      "key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "keyBytes": 64,
+      "valueLength": 1,
+      "error": null
+    },
+    {
+      "name": "key one byte over MAX_KEY_SIZE throws MaxSizeError",
+      "key": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+      "keyBytes": 65,
+      "valueLength": 1,
+      "error": "MaxSizeError"
+    },
+    {
+      "name": "spec: Templatization example key is rejected (templating is out of scope)",
+      "key": "this is a really long key that for some reason is extra long even though it probably doesn't need to be this long but idk maybe someone has a key this long",
+      "keyBytes": 157,
+      "valueLength": 23,
+      "error": "MaxSizeError"
+    },
+    {
+      "name": "unicode key over the limit in bytes (32 chars, 66 bytes) throws MaxSizeError",
+      "key": "éééééééééééééééééééééééééééééééé",
+      "keyBytes": 66,
+      "valueLength": 1,
+      "error": "MaxSizeError"
+    }
+  ]
+}

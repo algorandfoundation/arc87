@@ -1,0 +1,33 @@
+[algokit]
+min_version = "v2.6.0"
+
+[project]
+type = 'contract'
+name = 'arc-87-py'
+artifacts = 'smart_contracts/artifacts'
+
+[project.run]
+build = { commands = ['poetry run puyapy smart_contracts/arc87.py smart_contracts/arc87_reader.py --out-dir artifacts --output-arc56 --target-avm-version 13'], description = 'Compile the ARC-87 store and reader contracts with puyapy (ARC-56 output, AVM 13)' }
+test = { commands = ['poetry run pytest'], description = 'Run the pytest suite (contract + vector conformance)' }
+# Tealer skips programs containing TMPL_* variables, so audit a copy with the deployed
+# values substituted (DELETABLE=1, UPDATABLE=0). The 7-line always-approve clear program is
+# not analyzed because its generic detectors report false positives. Tealer also reports
+# `missing-fee-check` on every application execution path here (including paths without an
+# inner transaction); the exact two planned exclusions were tested and leave that one High
+# finding. Keep this single additional exclusion narrow and documented rather than changing
+# the contract's fee semantics or mutating the TEAL solely for the audit. The public `readonly`
+# reads (`length`/`extract`) deliberately carry no creator check; Tealer then
+# reports `unprotected-updatable` / `unprotected-deletable` on their paths even though the ARC-4
+# router already restricts them to NoOp (`txn OnCompletion; !; assert`, a form the detector does
+# not recognise) — false positives, excluded as well.
+audit-teal = { commands = [
+  'poetry run python scripts/substitute_template_vars.py',
+  'algokit task analyze smart_contracts/artifacts/audit/ARC87.approval.teal --force --exclude is-updatable --exclude is-deletable --exclude missing-fee-check --exclude unprotected-updatable --exclude unprotected-deletable',
+], description = 'Audit the compiled approval program with Tealer (run build first)' }
+
+# No Python deployer: the TypeScript demo in projects/arc-87-ts is the only deployer. A no-op
+# command keeps `algokit project deploy` at the workspace root working (it visits every
+# contract project and fails on the first one without a deploy command).
+[project.deploy]
+command = "echo 'arc-87-py has no deploy script; the TypeScript demo in projects/arc-87-ts deploys the contract'"
+environment_secrets = []

@@ -1,0 +1,55 @@
+{
+  "$comment": "ARC-87 normalizePath vectors. Writers SHOULD emit the canonical `[N]` index form; readers MUST also accept the dotted `.N` form. normalizePath maps every `[N]` to `.N` outside of `${...}` escaped spans so that both spellings resolve to the same slot. Each case lists the equivalence class `inputs` and the single `normalized` form they all map to. normalizePath MUST be idempotent: normalizePath(normalized) === normalized.",
+  "cases": [
+    {
+      "name": "no indices",
+      "inputs": ["o_alice", "o_metadata.rp"],
+      "normalized": ["o_alice", "o_metadata.rp"]
+    },
+    {
+      "name": "spec: blobs[1] and blobs.1 are the same slot",
+      "inputs": ["o_blobs[1]", "o_blobs.1"],
+      "normalized": ["o_blobs.1", "o_blobs.1"]
+    },
+    {
+      "name": "index followed by nested key",
+      "inputs": ["o_items[0].id", "o_items.0.id"],
+      "normalized": ["o_items.0.id", "o_items.0.id"]
+    },
+    {
+      "name": "consecutive indices",
+      "inputs": ["o_m[0][1]", "o_m.0[1]", "o_m[0].1", "o_m.0.1"],
+      "normalized": ["o_m.0.1", "o_m.0.1", "o_m.0.1", "o_m.0.1"]
+    },
+    {
+      "name": "multi-digit index",
+      "inputs": ["o_a[12]", "o_a.12"],
+      "normalized": ["o_a.12", "o_a.12"]
+    },
+    {
+      "name": "escaped span is left untouched",
+      "inputs": ["o_${a[1].b}", "o_x.${c[0]}"],
+      "normalized": ["o_${a[1].b}", "o_x.${c[0]}"]
+    },
+    {
+      "name": "index outside an escaped span is still normalized",
+      "inputs": ["o_${a[1]}[2].c", "o_${a[1]}.2.c"],
+      "normalized": ["o_${a[1]}.2.c", "o_${a[1]}.2.c"]
+    },
+    {
+      "name": "escaped span containing a dotted index is left untouched",
+      "inputs": ["o_${a.1}"],
+      "normalized": ["o_${a.1}"]
+    },
+    {
+      "name": "non-numeric brackets are not indices",
+      "inputs": ["o_a[x]", "o_a[]", "o_a[1x]"],
+      "normalized": ["o_a[x]", "o_a[]", "o_a[1x]"]
+    },
+    {
+      "name": "unprefixed paths normalize the same way",
+      "inputs": ["blobs[1]", "blobs.1"],
+      "normalized": ["blobs.1", "blobs.1"]
+    }
+  ]
+}
